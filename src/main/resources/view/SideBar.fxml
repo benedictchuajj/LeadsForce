@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="sideBar" alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" spacing="4.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox fx:id="sideBarHeader" alignment="CENTER" prefHeight="38.0" prefWidth="100.0" spacing="8.0" style="-fx-background-color: #2B2D2F;">
+         <children>
+            <ImageView fx:id="logo" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <Label maxWidth="Infinity" minWidth="-Infinity" text="LeadsForce" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font></Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <StackPane fx:id="contactBookPlaceholder" prefHeight="33.0" prefWidth="109.0" />
+      <StackPane fx:id="calendarPlaceholder" prefHeight="33.0" prefWidth="109.0">
+         <VBox.margin>
+            <Insets top="1.0" />
+         </VBox.margin></StackPane>
+   </children>
+</VBox>
