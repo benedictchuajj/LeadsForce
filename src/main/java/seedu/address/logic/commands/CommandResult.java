@@ -19,12 +19,6 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
-    /** Command needs to update the PersonViewPanel */
-    private boolean view;
-
-    /** Person to be viewed in PersonViewPanel */
-    private Person personToView;
-
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
@@ -32,7 +26,6 @@ public class CommandResult {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
-        this.view = false;
     }
 
     /**
@@ -43,21 +36,8 @@ public class CommandResult {
         this(feedbackToUser, false, false);
     }
 
-    public void setPersonToView(Person personToView) {
-        this.view = true;
-        this.personToView = personToView;
-    }
-
-    public Person getPersonToView() {
-        return personToView;
-    }
-
     public String getFeedbackToUser() {
         return feedbackToUser;
-    }
-
-    public boolean isView() {
-        return view;
     }
 
     public boolean isShowHelp() {

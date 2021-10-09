@@ -9,6 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonHasIndex;
 
 public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
@@ -18,12 +19,10 @@ public class ViewCommand extends Command {
             + "Parameters: view {client id of the customer} \n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    // Results to be printed to the Result Display
-
     public static final String MESSAGE_VIEW_SUCCESS = "Viewing person: %1$s";
     public static final String MESSAGE_NON_EXISTENT_USER = "There's no user with user ID %d";
-    // private final PersonDoesExistsPredicate predicate;
 
+    private final PersonHasIndex predicate;
     private final Index index;
 
     /**
@@ -44,11 +43,9 @@ public class ViewCommand extends Command {
         }
 
         Person personToView = lastShownList.get(index.getZeroBased());
+        model.updatePersonToView(predicate);
 
-        CommandResult commandResult = new CommandResult(String.format(MESSAGE_VIEW_SUCCESS, personToView.getName()));
-        commandResult.setPersonToView(personToView);
-
-        return commandResult;
+        return new CommandResult(String.format(MESSAGE_VIEW_SUCCESS, personToView.getName()));
     }
 
     @Override

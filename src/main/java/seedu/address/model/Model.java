@@ -84,4 +84,13 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Returns an unmodifiable view of the person to view */
+    ObservableList<Person> getPersonToView();
+
+    /**
+     * Updates the filter of the filtered person to view list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updatePersonToView(Predicate<Person> predicate);
 }
