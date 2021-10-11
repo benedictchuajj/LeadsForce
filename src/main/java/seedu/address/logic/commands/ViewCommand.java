@@ -27,8 +27,9 @@ public class ViewCommand extends Command {
 
     /**
      * @param index of the person in the filtered person list to view
+     * @param predicate checking index of the person to view
      */
-    public ViewCommand(Index index) {
+    public ViewCommand(Index index, PersonHasIndex predicate) {
         requireNonNull(index);
         this.index = index;
     }

@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+<<<<<<< HEAD
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CURRENTPLAN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -9,6 +10,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LASTMET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+=======
+import static seedu.address.logic.parser.CliSyntax.*;
+>>>>>>> clientInfo/branch-add-clientinfo
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +39,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+<<<<<<< HEAD
                     PREFIX_LASTMET, PREFIX_CURRENTPLAN, PREFIX_TAG);
+=======
+                    PREFIX_RISKAPPETITE, PREFIX_DISPOSABLEINCOME, PREFIX_TAG);
+>>>>>>> clientInfo/branch-add-clientinfo
 
         Index index;
 
@@ -50,13 +58,21 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)));
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)));
+        }
+        if (argMultimap.getValue(PREFIX_RISKAPPETITE).isPresent()) {
+            editPersonDescriptor.setRiskAppetite(ParserUtil
+                .parseRiskAppetite(argMultimap.getValue(PREFIX_RISKAPPETITE)));
+        }
+        if (argMultimap.getValue(PREFIX_DISPOSABLEINCOME).isPresent()) {
+            editPersonDescriptor.setDisposableIncome(ParserUtil
+                .parseDisposableIncome(argMultimap.getValue(PREFIX_DISPOSABLEINCOME)));
         }
         if (argMultimap.getValue(PREFIX_LASTMET).isPresent()) {
             editPersonDescriptor.setLastMet(ParserUtil.parseLastMet(argMultimap.getValue(PREFIX_LASTMET).get()));

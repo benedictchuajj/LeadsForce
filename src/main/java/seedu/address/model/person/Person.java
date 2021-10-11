@@ -2,10 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import seedu.address.model.tag.Tag;
 
@@ -15,13 +12,16 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
-    // Identity fields
+    // Compulsory Identity fields
+    private final ClientId clientId;
     private final Name name;
-    private final Phone phone;
     private final Email email;
 
     // Data fields
-    private final Address address;
+    private final Optional<Phone> phone;
+    private final Optional<Address> address;
+    private final Optional<RiskAppetite> riskAppetite;
+    private final Optional<DisposableIncome> disposableIncome;
     private final Set<Tag> tags = new HashSet<>();
     private final CurrentPlan currentPlan;
     private final LastMet lastMet;
@@ -29,32 +29,41 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, CurrentPlan currentPlan, LastMet lastMet,
-                  Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(ClientId clientId, Name name, Phone phone, Email email, Address address, RiskAppetite riskAppetite,
+        DisposableIncome disposableIncome ,Set<Tag> tags) {
+
+        requireAllNonNull(name, email, tags);
+        this.clientId = clientId;
         this.name = name;
-        this.phone = phone;
+        this.phone = phone == null ? Optional.empty() : Optional.of(phone);
         this.email = email;
-        this.address = address;
-        this.currentPlan = currentPlan;
-        this.lastMet = lastMet;
+        this.currentPlan = null; //placeholder
+        this.lastMet = null; //placeholder
+        this.address = address == null ? Optional.empty() : Optional.of(address);
+        this.riskAppetite = riskAppetite == null ? Optional.empty() : Optional.of(riskAppetite);
+        this.disposableIncome = disposableIncome == null ? Optional.empty() : Optional.of(disposableIncome);
         this.tags.addAll(tags);
 
     }
+
+    public ClientId getClientId() { return clientId; }
 
     public Name getName() {
         return name;
     }
 
-    public Phone getPhone() {
+    public Optional<Phone> getPhone() {
+
         return phone;
+
     }
 
     public Email getEmail() {
         return email;
     }
 
-    public Address getAddress() {
+    public Optional<Address> getAddress() {
+
         return address;
     }
 
@@ -66,6 +75,14 @@ public class Person {
         return currentPlan;
     }
 
+    public Optional<RiskAppetite> getRiskAppetite() {
+        return riskAppetite;
+    }
+
+    public Optional<DisposableIncome> getDisposableIncome() {
+        return disposableIncome;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -75,16 +92,20 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same email.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
+        if (otherPerson == null) {
+            return false;
+
+        }
         if (otherPerson == this) {
             return true;
         }
-
         return otherPerson != null
-                && otherPerson.getName().equals(getName());
+                &&  otherPerson.getClientId().equals(getClientId())
+                    || otherPerson.getEmail().equals(getEmail());
     }
 
     /**
@@ -102,35 +123,47 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(getName())
-                && otherPerson.getCurrentPlan().equals(getCurrentPlan())
-                && otherPerson.getLastMet().equals(getLastMet())
+        return otherPerson.getClientId().equals(getClientId())
+                && otherPerson.getName().equals(getName())
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
+                && otherPerson.getRiskAppetite().equals(getRiskAppetite())
+                && otherPerson.getDisposableIncome().equals(getDisposableIncome())
                 && otherPerson.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, lastMet, currentPlan, tags);
+        return Objects.hash(name, email);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append("; Last Met: ")
-                .append(getLastMet())
-                .append("; current plans: ")
-                .append(getCurrentPlan())
-                .append("; Phone: ")
-                .append(getPhone())
+        builder.append("Client ID: ")
+                .append(getClientId())
+                .append("; Name: ")
+                .append(getName())
                 .append("; Email: ")
-                .append(getEmail())
-                .append("; Address: ")
-                .append(getAddress());
+                .append(getEmail());
+
+        if (!phone.isEmpty()) {
+            builder.append("; Phone: ").append(getPhone().get().value);
+        }
+
+        if (!address.isEmpty()) {
+            builder.append("; Address: ").append(getAddress().get().value);
+        }
+
+        if (!riskAppetite.isEmpty()) {
+            builder.append("; Risk Appetite: ").append(getRiskAppetite().get().value);
+        }
+
+        if (!disposableIncome.isEmpty()) {
+            builder.append("; Disposable Income: ").append(getDisposableIncome().get().value);
+        }
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {
